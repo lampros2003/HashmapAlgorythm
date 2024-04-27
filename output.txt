@@ -1,0 +1,59 @@
+hash solvertime =  1.5853335857391357 for n = 1000000
+,
+lstsolvertime =  3.6432859897613525 for n = 1000000
+
+
+hash solvertime =  3.39143705368042 for n = 2000000
+
+lstsolvertime =  7.270020246505737 for n = 2000000
+
+
+hash solvertime =  7.607010841369629 for n = 5000000
+
+lstsolvertime =  15.613855600357056 for n = 5000000
+
+hash solvertime =  0.0067310333251953125 for n = 1000
+,
+lstsolvertime =  0.010283470153808594 for n = 1000
+
+
+hash solvertime =  0.017259597778320312 for n = 100
+,
+lstsolvertime =  0.0029010772705078125 for n = 100
+
+
+hash solvertime =  0.0027151107788085938 for n = 100
+,
+lstsolvertime =  0.0 for n = 100
+
+
+hash solvertime =  0.007230997085571289 for n = 10
+,
+lstsolvertime =  0.0 for n = 10
+
+
+hash solvertime =  0.003209352493286133 for n = 10
+,
+lstsolvertime =  0.0 for n = 10
+
+
+hash solvertime =  0.007954835891723633 for n = 10
+,
+lstsolvertime =  0.0 for n = 10
+
+
+hash solvertime =  0.007224082946777344 for n = 10
+,
+lstsolvertime =  0.002268075942993164 for n = 10
+
+
+hash solvertime =  0.0032875537872314453 for n = 10
+,
+lstsolvertime =  0.0016257762908935547 for n = 10
+
+
+hash solvertime =  0.010498046875 for n = 10
+,
+lstsolvertime =  0.0021555423736572266 for n = 10
+
+
