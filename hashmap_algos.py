@@ -27,6 +27,12 @@ class Card:
         self.textrepr = textnum
         self.number = [int(i)for i in textnum.split("-")]
     #Generate a lst of cards 
+    def clear ():
+        for i in Card.card_lst:
+            i.total = 0
+            i.charges = 0   
+        
+        
     def gen_card_lst(n):
         #Use sample to ensure every card number is completely unique
         templst = random.sample(range(1000000000000000, 9999999999999999),n)
@@ -96,10 +102,15 @@ class HashTable:
             self.resize()
         return
         
-    #Search and del not necessary
+    #del not necessary
     def search(self, key):
-        pass    
-
+        index = self.hash_function(key)
+        while self.table[index] is not None:
+            if self.table[index][0] == key:
+                return self.table[index][1]
+            index = (index + 1) % self.size
+        return None
+    #del not necessary
     def delete(self, key):
         pass
 #Create purchase class Purcahse : (Card:Card,Value:Int,Date:str)
@@ -159,13 +170,25 @@ class Purchase:
 
 #Function to find the requested values using lst datatype
 def lstsolver():
+    maxcahrge = Purchase.purchase_lst[0].getcard()
+    maxtotal = Purchase.purchase_lst[0].getcard()
+    mintotal = Purchase.purchase_lst[0].getcard()
+    daysdict = {"MON":0,"TUE":0,"WEN":0,"THU":0,"FRI":0, "SAT":0,"SUN":0}
+
     for i in Purchase.purchase_lst:
-        i.getcard().charges +=1
-        i.getcard().total += i.getvalue()   
-    maxcahrge = max(Card.card_lst,key = lambda x: x.charges)
-    maxtotal = max(Card.card_lst,key = lambda x: x.total)
-    mintotal = min(Card.card_lst,key = lambda x: x.total)
-    mostcommonday = max(Purchase.validdays,key = lambda x: sum([1 for i in Purchase.purchase_lst if i.getdate() == x]))
+        temp = i.getcard()
+        temp.charges +=1
+        temp.total += i.getvalue()   
+        if temp.total > maxtotal.total:
+            maxtotal = temp
+        if temp.total < mintotal.total:
+            mintotal = temp
+        if temp.charges > maxcahrge.charges:
+            maxcahrge = temp
+        daysdict[i.getdate()] += 1
+    mostcommonday = max(daysdict,key = daysdict.get)
+        
+    
     print(f"Card with max charges: {maxcahrge} with {maxcahrge.charges} charges")
     print(f"Card with max total: {maxtotal} with {maxtotal.total} total")
     #print(f"Card with min charges: {mincharge} with {mincharge.charges} charges")
@@ -176,15 +199,23 @@ def lstsolver():
 def hashsolver():
     daysdict = {"MON":0,"TUE":0,"WEN":0,"THU":0,"FRI":0, "SAT":0,"SUN":0}
     i = 0 
-    while Purchase.purchase_hash.table[i] is  None:
-        i +=1
-    maxcahrge = 0
-    maxtotal = 0 
-    mintotal = 0
+    dUMMY = Card.card_lst[0]
+    maxcahrge = dUMMY
+    maxtotal = dUMMY
+    mintotal = dUMMY
     print(maxcahrge,maxtotal,mintotal)
-    for card in Card.card_lst:
-        card.charges = len(HashTable[card][1])
-        card.total = sum(HashTable[card][1])
+    for i in Purchase.purchase_hash.table:
+        if i is not None:
+            for t in i[1]:   
+                i[0].charges +=1
+                i[0].total += t.getvalue()
+                daysdict[t.getdate()] += 1
+            if i[0].total > maxtotal.total:
+                maxtotal = i[0]
+            if i[0].total < mintotal.total:
+                mintotal = i[0]
+            if i[0].charges > maxcahrge.charges:
+                maxcahrge = i[0]
     print(f"Card with max charges: {maxcahrge} with {maxcahrge.charges} charges")
     print(f"Card with max total: {maxtotal} with {maxtotal.total} total")
     #print(f"Card with min charges: {mincharge} with {mincharge.charges} charges")
@@ -197,46 +228,43 @@ def runer(n1,n2):
 
 
 
-runer(2,10)
+runer(20000,1000000)
 #file to store results
 f =open('output.txt', 'a')
-
 # time the funcs for various n vals
+Card.clear()
 start = time.time()
 hashsolver()
 end  = time.time()
-print("hash solvertime = ",end-start,f"for n = {Purchase.n}\n,",file = f)
-
+print("hash solvertime = ",end-start,f"for n = {Purchase.n},",file = f)
+Card.clear()    
 start = time.time()
 lstsolver()
 end  = time.time()
 print("lstsolvertime = ",end-start,f"for n = {Purchase.n}\n\n",file = f)
-""" 
+
 Purchase.expandlst(1000000)
+Card.clear()
 start = time.time()
 hashsolver()
 end  = time.time()
-print("hash solvertime = ",end-start,f"for n = {Purchase.n}\n",file = f)
-
+print("hash solvertime = ",end-start,f"for n = {Purchase.n}",file = f)
+Card.clear()
 start = time.time()
 lstsolver()
 end  = time.time()
 print("lstsolvertime = ",end-start,f"for n = {Purchase.n}\n\n",file = f)
 
 Purchase.expandlst(3000000)
+Card.clear()
 start = time.time()
 hashsolver()
 end  = time.time()
-print("hash solvertime = ",end-start,f"for n = {Purchase.n}\n",file = f)
-
+print("hash solvertime = ",end-start,f"for n = {Purchase.n}",file = f)
+Card.clear()
 start = time.time()
 lstsolver()
 end  = time.time()
 print("lstsolvertime = ",end-start,f"for n = {Purchase.n}\n",file = f)
-
- """
-for i in Purchase.purchase_lst:
-    print(i,"\n")
-
-for i in Purchase.purchase_hash.table:
-    print(i,"\n")
+ 
+f.close()
